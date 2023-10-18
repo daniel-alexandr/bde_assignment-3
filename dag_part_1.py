@@ -424,18 +424,62 @@ def import_load_facts_func(**kwargs):
     df = pd.concat([pd.read_csv(os.path.join(FACTS, fname)) for fname in filelist], ignore_index=True)
 
     if len(df) > 0:
-        col_names = ['date','order_id','category_id','subcategory_id','brand_id','price']
+        col_names = ['LISTING_ID',
+    'SCRAPE_ID',
+    'SCRAPED_DATE',
+    'HOST_ID',
+    'HOST_NAME',
+    'HOST_SINCE',
+    'HOST_IS_SUPERHOST',
+    'HOST_NEIGHBOURHOOD',
+    'LISTING_NEIGHBOURHOOD',
+    'PROPERTY_TYPE',
+    'ROOM_TYPE',
+    'ACCOMMODATES',
+    'PRICE',
+    'HAS_AVAILABILITY',
+    'AVAILABILITY_30',
+    'NUMBER_OF_REVIEWS',
+    'REVIEW_SCORES_RATING',
+    'REVIEW_SCORES_ACCURACY',
+    'REVIEW_SCORES_CLEANLINESS',
+    'REVIEW_SCORES_CHECKIN',
+    'REVIEW_SCORES_COMMUNICATION',
+    'REVIEW_SCORES_VALUE']
 
         values = df[col_names].to_dict('split')
         values = values['data']
         logging.info(values)
 
         insert_sql = """
-                    INSERT INTO raw.facts(date,order_id,category_id,subcategory_id,brand_id,price)
+                    INSERT INTO raw.listings(
+                        LISTING_ID,
+                        SCRAPE_ID,
+                        SCRAPED_DATE,
+                        HOST_ID,
+                        HOST_NAME,
+                        HOST_SINCE,
+                        HOST_IS_SUPERHOST,
+                        HOST_NEIGHBOURHOOD,
+                        LISTING_NEIGHBOURHOOD,
+                        PROPERTY_TYPE,
+                        ROOM_TYPE,
+                        ACCOMMODATES,
+                        PRICE,
+                        HAS_AVAILABILITY,
+                        AVAILABILITY_30,
+                        NUMBER_OF_REVIEWS,
+                        REVIEW_SCORES_RATING,
+                        REVIEW_SCORES_ACCURACY,
+                        REVIEW_SCORES_CLEANLINESS,
+                        REVIEW_SCORES_CHECKIN,
+                        REVIEW_SCORES_COMMUNICATION,
+                        REVIEW_SCORES_VALUE
+                    )
                     VALUES %s
                     """
 
-        result = execute_values(conn_ps.cursor(), insert_sql, values, page_size=len(df))
+        result = execute_values(conn_ps.cursor(), insert_sql, values, page_size=1000)
         conn_ps.commit()
     else:
         None
@@ -450,29 +494,38 @@ def import_load_facts_func(**kwargs):
 #
 #########################################################
 
-import_load_dim_category_task = PythonOperator(
-    task_id="import_load_dim_category_id",
-    python_callable=import_load_dim_category_func,
+import_load_dim_nswlgacode_task= PythonOperator(
+    task_id="import_load_dim_nswlgacode",
+    python_callable=import_load_dim_nswlgacode_func,
     op_kwargs={},
     provide_context=True,
     dag=dag
 )
 
-import_load_dim_sub_category_task = PythonOperator(
-    task_id="import_load_dim_sub_category_id",
-    python_callable=import_load_dim_sub_category_func,
+import_load_dim_nswlgasuburb_task = PythonOperator(
+    task_id="import_load_dim_nswlgasuburb",
+    python_callable=import_load_dim_nswlgasuburb_func,
     op_kwargs={},
     provide_context=True,
     dag=dag
 )
 
-import_load_dim_brand_task = PythonOperator(
-    task_id="import_load_dim_brand_id",
-    python_callable=import_load_dim_brand_func,
+import_load_dim_censusG02_task = PythonOperator(
+    task_id="import_load_dim_censusG02",
+    python_callable=import_load_dim_censusG02_func,
     op_kwargs={},
     provide_context=True,
     dag=dag
 )
+
+import_load_dim_censusG01_task = PythonOperator(
+    task_id="import_load_dim_censusG01",
+    python_callable=import_load_dim_censusG01_func,
+    op_kwargs={},
+    provide_context=True,
+    dag=dag
+)
+
 
 import_load_facts_task = PythonOperator(
     task_id="import_load_facts_id",
@@ -483,4 +536,4 @@ import_load_facts_task = PythonOperator(
 )
 
 
-[import_load_dim_category_task, import_load_dim_sub_category_task, import_load_dim_brand_task, import_load_facts_task]
+[import_load_dim_nswlgacode_task, import_load_dim_nswlgasuburb_task, import_load_dim_censusG02_task,import_load_dim_censusG01_task ,import_load_facts_task]
