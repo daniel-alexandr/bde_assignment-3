@@ -145,7 +145,7 @@ def import_load_dim_censusG02_func(**kwargs):
         logging.info(values)
 
         insert_sql = """
-                    INSERT INTO raw.2016Census_G02_NSW_LGA(
+                    INSERT INTO raw.Census_G02_NSW_LGA(
         lga_code_2016,
         median_age_persons,
         median_mortgage_repay_monthly,
@@ -292,7 +292,7 @@ def import_load_dim_censusG01_func(**kwargs):
         logging.info(values)
 
         insert_sql = """
-                    INSERT INTO raw.2016Census_G01_NSW_LGA(lga_code_2016,
+                    INSERT INTO raw.Census_G01_NSW_LGA(lga_code_2016,
                     tot_p_m,
                     tot_p_f,
                     tot_p_p,
