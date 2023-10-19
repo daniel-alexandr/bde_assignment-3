@@ -7,34 +7,34 @@ create schema raw;
 
 
 create table raw.listings (
-	LISTING_ID int primary key, 
-	SCRAPE_ID integer null, 
-	SCRAPED_DATE date null,
-	HOST_ID integer null,
+	LISTING_ID varchar,
+	SCRAPE_ID varchar NULL,
+	SCRAPED_DATE varchar null,
+	HOST_ID	varchar null,
 	HOST_NAME varchar null, 
-	HOST_SINCE date null,
+	HOST_SINCE varchar null,
 	HOST_IS_SUPERHOST varchar null,
 	HOST_NEIGHBOURHOOD varchar null,
 	LISTING_NEIGHBOURHOOD varchar null,
 	PROPERTY_TYPE varchar null,
 	ROOM_TYPE varchar null,
-	ACCOMMODATES integer null,
-	PRICE integer null,
+	ACCOMMODATES varchar null,
+	PRICE varchar null,
 	HAS_AVAILABILITY varchar,
-	AVAILABILITY_30 integer null,
-	NUMBER_OF_REVIEWS integer null,
-	REVIEW_SCORES_RATING integer null, 
-	REVIEW_SCORES_ACCURACY integer null,
-	REVIEW_SCORES_CLEANLINESS integer null,
-	REVIEW_SCORES_CHECKIN integer null,
-	REVIEW_SCORES_COMMUNICATION integer null,
-	REVIEW_SCORES_VALUE integer null
+	AVAILABILITY_30 varchar null,
+	NUMBER_OF_REVIEWS varchar null,
+	REVIEW_SCORES_RATING varchar NULL,
+	REVIEW_SCORES_ACCURACY varchar null,
+	REVIEW_SCORES_CLEANLINESS varchar null,
+	REVIEW_SCORES_CHECKIN varchar null,	
+	REVIEW_SCORES_COMMUNICATION varchar null,
+	REVIEW_SCORES_VALUE varchar null
 );
 
 
 create table raw.nsw_lga_code (
 lga_code integer primary key,
-lga_name varchar NULL
+lga_name varchar null
 );
 
 create table raw.nsw_lga_suburb (
@@ -44,7 +44,7 @@ suburb_name varchar NULL
 
 
 
-CREATE TABLE raw."2016Census_G01_NSW_LGA" (
+CREATE TABLE raw.Census_G01_NSW_LGA (
 	lga_code_2016 varchar(50) NULL,
 	tot_p_m integer NULL,
 	tot_p_f integer NULL,
@@ -158,7 +158,7 @@ CREATE TABLE raw."2016Census_G01_NSW_LGA" (
 
 
 
-CREATE TABLE raw."2016Census_G02_NSW_LGA" (
+CREATE TABLE raw.Census_G02_NSW_LGA (
 	lga_code_2016 varchar(50) NULL,
 	median_age_persons integer NULL,
 	median_mortgage_repay_monthly integer NULL,
