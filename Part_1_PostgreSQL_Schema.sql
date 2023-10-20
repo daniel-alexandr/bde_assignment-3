@@ -9,7 +9,7 @@ create schema raw;
 create table raw.listings (
 	LISTING_ID varchar,
 	SCRAPE_ID varchar NULL,
-	SCRAPED_DATE varchar null,
+	SCRAPED_DATE date null,
 	HOST_ID	varchar null,
 	HOST_NAME varchar null, 
 	HOST_SINCE varchar null,
@@ -18,17 +18,17 @@ create table raw.listings (
 	LISTING_NEIGHBOURHOOD varchar null,
 	PROPERTY_TYPE varchar null,
 	ROOM_TYPE varchar null,
-	ACCOMMODATES varchar null,
-	PRICE varchar null,
+	ACCOMMODATES numeric null,
+	PRICE numeric null,
 	HAS_AVAILABILITY varchar,
-	AVAILABILITY_30 varchar null,
-	NUMBER_OF_REVIEWS varchar null,
-	REVIEW_SCORES_RATING varchar NULL,
-	REVIEW_SCORES_ACCURACY varchar null,
-	REVIEW_SCORES_CLEANLINESS varchar null,
-	REVIEW_SCORES_CHECKIN varchar null,	
-	REVIEW_SCORES_COMMUNICATION varchar null,
-	REVIEW_SCORES_VALUE varchar null
+	AVAILABILITY_30 numeric null,
+	NUMBER_OF_REVIEWS numeric null,
+	REVIEW_SCORES_RATING numeric NULL,
+	REVIEW_SCORES_ACCURACY numeric null,
+	REVIEW_SCORES_CLEANLINESS numeric null,
+	REVIEW_SCORES_CHECKIN numeric null,	
+	REVIEW_SCORES_COMMUNICATION numeric null,
+	REVIEW_SCORES_VALUE numeric null
 );
 
 
