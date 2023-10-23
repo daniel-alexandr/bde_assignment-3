@@ -7,7 +7,7 @@ create schema raw;
 
 
 create table raw.listings (
-	LISTING_ID varchar,
+	LISTING_ID integer,
 	SCRAPE_ID varchar NULL,
 	SCRAPED_DATE date null,
 	HOST_ID	varchar null,
