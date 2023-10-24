@@ -9,7 +9,7 @@
         )
     }}
 
-select scraped_date,
+select distinct scraped_date,
 host_id,
 room_type
 
