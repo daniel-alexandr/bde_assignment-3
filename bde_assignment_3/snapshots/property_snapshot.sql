@@ -1,4 +1,4 @@
-{% snapshot snapshot_neighbourhood %}
+{% snapshot snapshot_property %}
 
 {{
         config(
@@ -11,9 +11,10 @@
 
 select scraped_date,
 host_id,
-listing_neighbourhood,
-host_neighbourhood
-from {{ source('raw', 'listings') }}
+property_type,
+accommodates
+
+ from {{ source('raw', 'listings') }}
 
 
 {% endsnapshot %}
