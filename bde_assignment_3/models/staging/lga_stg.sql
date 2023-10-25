@@ -18,7 +18,9 @@ unknown as (
         'unknown' as lga_name
 
 )
-select * from unknown
-union all
+
 select * from source
+union all
+select * from unknown
+
 

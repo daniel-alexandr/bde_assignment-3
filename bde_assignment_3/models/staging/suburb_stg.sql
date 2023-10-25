@@ -14,10 +14,12 @@ source  as (
 
 unknown as (
     select
-        'unknown' as suburb_name,
-        'unknown' as lga_name
+        'unknown' as lga_name,
+        'unknown' as suburb_name
 )
-select * from unknown
-union all
+
 select * from source
+union all
+select * from unknown
+
 
