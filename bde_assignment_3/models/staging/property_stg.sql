@@ -16,7 +16,7 @@ cleaned as (
     select
         listing_id,
         property_type,
-        accomodates,
+        accommodates,
         dbt_valid_from
     from source
 ),

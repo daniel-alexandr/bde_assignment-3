@@ -16,7 +16,7 @@ cleaned as (
     select
         host_id,
         host_name,
-        to_date(host_since, 'DD/MM/YYYY') AS host_since
+        to_date(host_since, 'DD/MM/YYYY') AS host_since,
         CASE 
             WHEN host_is_superhost IS NULL THEN 'unknown'
             ELSE host_is_superhost
@@ -27,7 +27,7 @@ cleaned as (
 
 unknown as (
     select
-        0 as host_id,
+        '0' as host_id,
         'unknown' as host_name,
         '1900-01-01'::timestamp  as host_since,
         'unknown' as host_is_superhost,
