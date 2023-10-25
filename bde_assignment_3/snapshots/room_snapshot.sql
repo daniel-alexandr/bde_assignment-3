@@ -1,4 +1,4 @@
-{% snapshot snapshot_room %}
+{% snapshot room_snapshot %}
 
 {{
         config(
