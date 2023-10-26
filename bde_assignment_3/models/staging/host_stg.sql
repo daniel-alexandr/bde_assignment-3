@@ -21,7 +21,8 @@ cleaned as (
             WHEN host_is_superhost IS NULL THEN 'unknown'
             ELSE host_is_superhost
         END AS host_is_superhost,
-        dbt_valid_from
+        dbt_valid_from,
+        dbt_valid_to
     from source
 ),
 
@@ -31,7 +32,8 @@ unknown as (
         'unknown' as host_name,
         '1900-01-01'::timestamp  as host_since,
         'unknown' as host_is_superhost,
-        '1900-01-01'::timestamp  as dbt_valid_from
+        '1900-01-01'::timestamp  as dbt_valid_from,
+        null::timestamp as dbt_valid_to
 
 )
 select * from unknown
