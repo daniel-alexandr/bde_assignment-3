@@ -4,4 +4,4 @@
     )
 }}
 
-select * from {{ ref('property_snapshot') }}
+select * from {{ ref('property_stg') }}

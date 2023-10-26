@@ -4,4 +4,4 @@
     )
 }}
 
-select * from {{ ref('neighbourhood_snapshot') }}
+select * from {{ ref('neighbourhood_stg') }}

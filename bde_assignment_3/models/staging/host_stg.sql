@@ -14,9 +14,12 @@ source  as (
 
 cleaned as (
     select
-        host_id,
+        host_id :: varchar,
         host_name,
-        to_date(host_since, 'DD/MM/YYYY') AS host_since,
+        CASE
+            WHEN host_since ='NaN' then '1900-01-01'::timestamp
+            ELSE to_date(host_since, 'DD/MM/YYYY') 
+        END AS host_since,
         CASE 
             WHEN host_is_superhost IS NULL THEN 'unknown'
             ELSE host_is_superhost

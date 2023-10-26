@@ -4,4 +4,4 @@
     )
 }}
 
-select * from {{ ref('room_snapshot') }}
+select * from {{ ref('room_stg') }}

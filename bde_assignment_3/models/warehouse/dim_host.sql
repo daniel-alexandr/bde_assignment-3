@@ -4,4 +4,4 @@
     )
 }}
 
-select * from {{ ref('host_snapshot') }}
+select * from {{ ref('host_stg') }}
