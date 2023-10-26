@@ -1,6 +1,6 @@
 {{
     config(
-        unique_key='host_id'
+        unique_key=['host_id','scraped_date']
     )
 }}
 
