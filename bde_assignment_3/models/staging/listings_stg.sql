@@ -5,8 +5,17 @@
 }}
 
 
+with 
+
+source as 
+(
+    select *
+    from {{ source('raw', 'listings') }}
+)
+
 select listing_id,
-scraped_date
+host_id,
+scraped_date,
 price,
 has_availability,
 availability_30,
@@ -18,4 +27,4 @@ review_scores_checkin,
 review_scores_communication,
 review_scores_value
 
-from {{ source('raw', 'listings') }}
+from source
