@@ -17,6 +17,7 @@ select
 extracted_month as month,
 extracted_year as year,
 host_lga,
+host_lga_code,
 count(DISTINCT host_id) as number_distinct_host,
 sum (price * (30 - availability_30) ) as estimated_revenue,
 AVG (price * (30 - availability_30) ) as estimated_revenue_per_host
