@@ -1,6 +1,7 @@
+
 {{
     config(
-        unique_key=['listing_neighbourhood','month','year']
+        unique_key=['property_type','accomodates','room_type','month','year']
     )
 }}
 
@@ -17,7 +18,9 @@ with source as (
 active_listing as (
 
 select 
-listing_neighbourhood,
+property_type,
+accomodates,
+room_type,
 extracted_year,
 extracted_month,
 COUNT (*) as active_listing,
@@ -30,7 +33,7 @@ AVG (price * (30 - availability_30) ) as average_estimated_revenue_active_listin
 
 FROM source
 where source.has_availability='t'
-GROUP BY listing_neighbourhood,extracted_year,extracted_month
+GROUP BY property_type, accomodates,room_type, extracted_year,extracted_month
 
 ),
 
@@ -38,14 +41,16 @@ GROUP BY listing_neighbourhood,extracted_year,extracted_month
 inactive_listing as (
 
 select 
-listing_neighbourhood,
+property_type,
+accomodates,
+room_type,
 extracted_month,
 extracted_year,
 COUNT (*) as inactive_listing
 
 FROM source
 where source.has_availability='f'
-GROUP BY listing_neighbourhood,extracted_year,extracted_month
+GROUP BY property_type, accomodates,room_type, extracted_year,extracted_month
 
 
 ),
@@ -54,7 +59,9 @@ GROUP BY listing_neighbourhood,extracted_year,extracted_month
 all_listing as (
 
 select 
-listing_neighbourhood,
+property_type,
+accomodates,
+room_type,
 extracted_month,
 extracted_year,
 COUNT (*) as total_listing,
@@ -64,12 +71,14 @@ SUM(30 - availability_30) AS total_number_of_stays
 
 
 FROM source
-GROUP BY listing_neighbourhood,extracted_year,extracted_month
+GROUP BY property_type, accomodates,room_type, extracted_year,extracted_month
 
 )
 SELECT 
 
-all_listing.listing_neighbourhood,
+all_listing.property_type,
+all_listing.accomodates,
+all_listing.room_type,
 all_listing.extracted_month as month,
 all_listing.extracted_year as year,
 active_listing.active_listing*100/all_listing.total_listing as active_listing_rate,
@@ -80,8 +89,8 @@ active_listing.avg_price_active_listing,
 all_listing.number_distinct_host,
 all_listing.superhost_count*100/all_listing.number_distinct_host as superhost_rate,
 active_listing.avg_review_scores_rating,
-(active_listing.active_listing - LAG(active_listing.active_listing, 1) OVER (partition by all_listing.listing_neighbourhood ORDER BY all_listing.extracted_year,all_listing.extracted_month))*100/LAG(active_listing.active_listing, 1) OVER (partition by all_listing.listing_neighbourhood ORDER BY all_listing.extracted_year,all_listing.extracted_month) as percentage_change_active_listing, 
-(inactive_listing.inactive_listing - LAG(inactive_listing.inactive_listing, 1) OVER (partition by inactive_listing.listing_neighbourhood ORDER BY inactive_listing.extracted_year,all_listing.extracted_month))*100/LAG(inactive_listing.inactive_listing, 1) OVER (partition by all_listing.listing_neighbourhood ORDER BY all_listing.extracted_year,all_listing.extracted_month) as percentage_change_inactive_listing,
+(active_listing.active_listing - LAG(active_listing.active_listing, 1) OVER (partition by all_listing.property_type,all_listing.accomodates, all_listing.room_type ORDER BY all_listing.extracted_year,all_listing.extracted_month))*100/LAG(active_listing.active_listing, 1) OVER (partition by all_listing.property_type,all_listing.accomodates, all_listing.room_type ORDER BY all_listing.extracted_year,all_listing.extracted_month) as percentage_change_active_listing, 
+(inactive_listing.inactive_listing - LAG(inactive_listing.inactive_listing, 1) OVER (partition by all_listing.property_type,all_listing.accomodates, all_listing.room_type ORDER BY inactive_listing.extracted_year,all_listing.extracted_month))*100/LAG(inactive_listing.inactive_listing, 1) OVER (partition by all_listing.property_type,all_listing.accomodates, all_listing.room_type ORDER BY all_listing.extracted_year,all_listing.extracted_month) as percentage_change_inactive_listing,
 
 
 all_listing.total_number_of_stays,
@@ -92,10 +101,14 @@ active_listing.average_estimated_revenue_active_listing
 
 FROM
 all_listing 
-left join active_listing on all_listing.listing_neighbourhood  = active_listing.listing_neighbourhood
+left join active_listing on all_listing.property_type  = active_listing.property_type
+	AND all_listing.accomodates = active_listing.accomodates
+	and all_listing.room_type = active_listing.room_type
     AND all_listing.extracted_month = active_listing.extracted_month
     AND all_listing.extracted_year = active_listing.extracted_year
-left join inactive_listing on all_listing.listing_neighbourhood  = inactive_listing.listing_neighbourhood
+left join inactive_listing on all_listing.property_type  = inactive_listing.property_type
+	AND all_listing.accomodates = inactive_listing.accomodates
+	and all_listing.room_type = inactive_listing.room_type
     AND all_listing.extracted_month = inactive_listing.extracted_month
     AND all_listing.extracted_year = inactive_listing.extracted_year
     
