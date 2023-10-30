@@ -11,7 +11,7 @@ with source as (
     EXTRACT(YEAR FROM scraped_date) AS extracted_year
    
     from {{ ref('fact_listings') }}
-),
+)
 
 select
 extracted_month as month,
