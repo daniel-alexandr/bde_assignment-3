@@ -111,7 +111,7 @@ left join inactive_listing on all_listing.property_type  = inactive_listing.prop
 	and all_listing.room_type = inactive_listing.room_type
     AND all_listing.extracted_month = inactive_listing.extracted_month
     AND all_listing.extracted_year = inactive_listing.extracted_year
-    
+ORDER BY property_type,room_type,accomodates,year,month
 
 
       

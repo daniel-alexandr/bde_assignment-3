@@ -98,7 +98,7 @@ left join active_listing on all_listing.listing_neighbourhood  = active_listing.
 left join inactive_listing on all_listing.listing_neighbourhood  = inactive_listing.listing_neighbourhood
     AND all_listing.extracted_month = inactive_listing.extracted_month
     AND all_listing.extracted_year = inactive_listing.extracted_year
-    
+ORDER BY listing_neighbourhood,year,month
 
 
       

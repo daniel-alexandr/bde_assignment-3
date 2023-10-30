@@ -24,6 +24,7 @@ AVG (price * (30 - availability_30) ) as estimated_revenue_per_host
 
 from source
 group by host_lga,host_lga_code,extracted_month,extracted_year
+ORDER BY host_lga, extracted_year, extracted_month
 
 
 
