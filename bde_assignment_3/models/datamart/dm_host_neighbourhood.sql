@@ -23,7 +23,7 @@ sum (price * (30 - availability_30) ) as estimated_revenue,
 AVG (price * (30 - availability_30) ) as estimated_revenue_per_host
 
 from source
-group by host_lga,extracted_month,extracted_year
+group by host_lga,host_lga_code,extracted_month,extracted_year
 
 
 
